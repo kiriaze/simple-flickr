@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists( 'Simple_Flickr_Widget' ) ) :
 
-    // ADD FUNTION TO WIDGETS_INIT 
+    // ADD FUNTION TO WIDGETS_INIT
     add_action( 'widgets_init', 'simple_flickr' );
 
     // REGISTER WIDGET
@@ -33,7 +33,7 @@ if ( ! class_exists( 'Simple_Flickr_Widget' ) ) :
     public function __construct() {
         parent::__construct(
             'simple_flickr', // BASE ID
-            'Flickr Photos (Simple)', // NAME
+            'SimpleFlicks', // NAME
             array( 'description' => __( 'A widget that displays your Flickr photos', 'simple' ), )
         );
     }
@@ -41,7 +41,7 @@ if ( ! class_exists( 'Simple_Flickr_Widget' ) ) :
 
     /*--------------------------------------------------------------------*/
     /*  DISPLAY WIDGET
-    /*--------------------------------------------------------------------*/    
+    /*--------------------------------------------------------------------*/
     function widget( $args, $instance ) {
         extract( $args );
 
@@ -57,13 +57,13 @@ if ( ! class_exists( 'Simple_Flickr_Widget' ) ) :
         if ( $title ) echo $before_title . $title . $after_title;
 
         ?>
-        
+
         <div class="flickr-image-wrapper">
 
             <script type="text/javascript" src="http://www.flickr.com/badge_code_v2.gne?count=8&amp;display=<?php echo $display ?>&amp;size=s&amp;layout=x&amp;source=<?php echo $type ?>&amp;<?php echo $type ?>=<?php echo $flickrID ?>"></script>
-            
+
         </div>
-        
+
         <?php
 
         // AFTER WIDGET
@@ -80,7 +80,7 @@ if ( ! class_exists( 'Simple_Flickr_Widget' ) ) :
         // STRIP TAGS TO REMOVE HTML - IMPORTANT FOR TEXT IMPUTS
         $instance['title']      = strip_tags( $new_instance['title'] );
         $instance['flickrID']   = strip_tags( $new_instance['flickrID'] );
-        
+
         // NO NEED TO STRIP TAGS
         $instance['type']       = $new_instance['type'];
         $instance['display']    = $new_instance['display'];
@@ -92,7 +92,7 @@ if ( ! class_exists( 'Simple_Flickr_Widget' ) ) :
 
     /*--------------------------------------------------------------------*/
     /*  WIDGET SETTINGS (FRONT END PANEL)
-    /*--------------------------------------------------------------------*/     
+    /*--------------------------------------------------------------------*/
     function form( $instance ) {
 
         // WIDGET DEFAULTS
@@ -102,14 +102,14 @@ if ( ! class_exists( 'Simple_Flickr_Widget' ) ) :
             'type'      => 'user',
             'display'   => 'latest',
         );
-        
+
         $instance = wp_parse_args( (array) $instance, $defaults ); ?>
 
         <p>
             <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title:', 'simple') ?></label>
             <input type="text" class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" />
         </p>
-        
+
         <p>
             <label for="<?php echo $this->get_field_id( 'flickrID' ); ?>"><?php _e('Flickr ID:', 'simple') ?> (<a href="http://idgettr.com/">idGettr</a>)</label>
             <input type="text" class="widefat" id="<?php echo $this->get_field_id( 'flickrID' ); ?>" name="<?php echo $this->get_field_name( 'flickrID' ); ?>" value="<?php echo $instance['flickrID']; ?>" />
@@ -122,7 +122,7 @@ if ( ! class_exists( 'Simple_Flickr_Widget' ) ) :
                 <option <?php if ( 'group' == $instance['type'] ) echo 'selected="selected"'; ?>>group</option>
             </select>
         </p>
-        
+
         <p>
             <label for="<?php echo $this->get_field_id( 'display' ); ?>"><?php _e('Display (random or latest):', 'simple') ?></label>
             <select id="<?php echo $this->get_field_id( 'display' ); ?>" name="<?php echo $this->get_field_name( 'display' ); ?>" class="widefat">
@@ -130,11 +130,12 @@ if ( ! class_exists( 'Simple_Flickr_Widget' ) ) :
                 <option <?php if ( 'latest' == $instance['display'] ) echo 'selected="selected"'; ?>>latest</option>
             </select>
         </p>
-        
-        
+
+
         <?php
+
         } // END FORM
-        
+
     } // END CLASS
 
     if ( !function_exists('simple_flickr_shortcode') ) {
@@ -146,14 +147,14 @@ if ( ! class_exists( 'Simple_Flickr_Widget' ) ) :
                 'wrapper'   => 'ul',
                 'class'     => '',
             ), $atts));
-            
+
             $output = '';
 
             $output .= $before;
 
             $output .= '<'.$wrapper.' class="'.$class.'">';
 
-            $output .= Simple_Flickr_Widget::display_cached_content();
+            // $output .= Simple_Flickr_Widget::display_cached_content();
 
             $output .= '</'.$wrapper.'>';
 
